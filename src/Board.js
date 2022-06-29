@@ -30,11 +30,11 @@
     },
 
     _getFirstRowColumnIndexForMajorDiagonalOn: function(rowIndex, colIndex) {
-      return colIndex - rowIndex;
+      return colIndex - rowIndex; //   3  - 4 = -1
     },
 
     _getFirstRowColumnIndexForMinorDiagonalOn: function(rowIndex, colIndex) {
-      return colIndex + rowIndex;
+      return colIndex + rowIndex; // 3 + 4 = 7
     },
 
     hasAnyRooksConflicts: function() {
@@ -148,6 +148,9 @@
     //
     // test if a specific major diagonal on this board contains a conflict
     hasMajorDiagonalConflictAt: function(majorDiagonalColumnIndexAtFirstRow) {
+      // Declare board var to access the entire board
+
+
       return false; // fixme
     },
 
