@@ -17,50 +17,47 @@
 
 window.findNRooksSolution = function(n) {
   var solution = new Board({n: n});
-  var rows = solution.rows(n);
 
-  console.log(rows);
-  //  create counter var - number of rooks placed
-  var rooksPlaced = 0;
-
-  //iterate thru matrix
-  for (var i = 0; i < rows.length; i++) {
-    //  iterate thru each row of matrix
-    for (var j = 0; j < rows[i].length; j++) {
-      //while count < n, keep placing rooks
-      if (rooksPlaced === 0) {
-        solution.togglePiece(i, j);
-        rooksPlaced++;
-
-      } else if ((rooksPlaced > 0) && (rooksPlaced < n)) {
-        solution.togglePiece(i, j);
-        rooksPlaced++;
-
-
-        if (solution.hasAnyRooksConflicts()) {
-          solution.togglePiece(i, j);
-          rooksPlaced--;
-        }
-
-        if (rooksPlaced === n) {
-          return rows;
-        }
-        console.log(rooksPlaced);
+  for (var r = 0; r < n; r++) {
+    for (var c = 0; c < n; c++) {
+      solution.togglePiece(r, c);
+      if (solution.hasAnyRooksConflicts()) {
+        solution.togglePiece(r, c);
       }
     }
-
-    //  check if placed rook has conflict
-    //    if yes, move rook to next square
-    //    if no, place rook and move on to next rook placement
   }
-
-
   console.log('Single solution for ' + n + ' rooks:', JSON.stringify(solution));
+  return solution.rows();
 };
 
 // return the number of nxn chessboards that exist, with n rooks placed such that none of them can attack each other
 window.countNRooksSolutions = function(n) {
-  var solutionCount = undefined; //fixme
+  var solution = new Board({n: n});
+  var solutionCount = 0;
+
+  var r = 0;
+  var c = 0;
+
+  var addRooks = function (n, r, c) {
+    //base case
+    if (r === n) {
+      solutionCount++;
+      return;
+    }
+
+    //recursive case
+    for (c = 0; c < n; c++) {
+      solution.togglePiece(r, c);
+      if (solution.hasAnyRooksConflicts()) {
+        solution.togglePiece(r, c);
+      } else {
+        addRooks(n, r + 1);
+        solution.togglePiece(r, c);
+      }
+    }
+  };
+  addRooks(n, r, c);
+
 
   console.log('Number of solutions for ' + n + ' rooks:', solutionCount);
   return solutionCount;
