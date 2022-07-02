@@ -114,7 +114,6 @@
     // test if a specific column on this board contains a conflict
     hasColConflictAt: function(colIndex) {
       var board = this.rows();
-      console.log('board: ', board);
       var counter = 0;
       var col = this.get(colIndex);
 
